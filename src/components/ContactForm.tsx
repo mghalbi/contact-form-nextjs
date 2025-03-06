@@ -1,16 +1,32 @@
 "use client"
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Loader2 } from 'lucide-react';
+import { useSession } from "next-auth/react";
+
 
 const ContactForm = () => {
+  
+  const { data: session } = useSession();
+
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
-    email: ''
+    email: {}
   });
-  const [status, setStatus] = useState({ loading: false, success: false, error: false });
+  const [status, setStatus] = useState({ loading: false, success: false, error: '' });
+  
+  // Set email from session when component loads or session changes
+  useEffect(() => {
+    if (session?.user?.email) {
+      setFormData(prev => ({
+        ...prev,
+        name: session.user.name || '',
+        email: session.user.email || ''
+      }));
+    }
+  }, [session]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -22,7 +38,7 @@ const ContactForm = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setStatus({ loading: true, success: false, error: false });
+    setStatus({ loading: true, success: false, error: '' });
 
     try {
       const response = await fetch('/api/submit-form', {
@@ -33,13 +49,19 @@ const ContactForm = () => {
         body: JSON.stringify(formData)
       });
 
-      if (!response.ok) throw new Error('Submission failed');
+      const data = await response.json();
+
+      if (!response.ok) {
+        // Handle error response
+        setStatus({ loading: false, success: false, error: data.error   });
+        return
+      }
       
-      setStatus({ loading: false, success: true, error: false });
+      setStatus({ loading: false, success: true, error: '' });
       setFormData({ name: '', phone: '', email: '' });
-    } catch (error) {
-      console.error('Form submission error:', error);
-      setStatus({ loading: false, success: false, error: true });
+    } catch (e) {
+      console.error('Form submission error:', e);
+      setStatus({ loading: false, success: false, error: 'Error'  });
     }
   };
 
@@ -50,21 +72,6 @@ const ContactForm = () => {
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-              Full Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-              placeholder="Enter your full name"
-            />
-          </div>
 
           <div>
             <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
@@ -79,22 +86,6 @@ const ContactForm = () => {
               required
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
               placeholder="Enter your phone number"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-              Email Address
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-              placeholder="Enter your email address"
             />
           </div>
 
@@ -121,7 +112,7 @@ const ContactForm = () => {
 
           {status.error && (
             <div className="p-4 bg-red-100 text-red-700 rounded-md">
-              An error occurred. Please try again later.
+              {status.error}
             </div>
           )}
         </form>
