@@ -1,6 +1,11 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
+// Define the type for the redirect callback parameters
+interface RedirectCallbackParams {
+  baseUrl: string;
+}
+
 export const authOptions = {
   providers: [
     GoogleProvider({
@@ -9,7 +14,7 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    async redirect({ baseUrl }) {
+    async redirect({ baseUrl }: RedirectCallbackParams) {
       // Redirect to dashboard after sign in
       return `${baseUrl}/contacts`;
     },
