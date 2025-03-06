@@ -5,7 +5,6 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Loader2 } from 'lucide-react';
 import { useSession } from "next-auth/react";
 
-
 const ContactForm = () => {
   
   const { data: session } = useSession();

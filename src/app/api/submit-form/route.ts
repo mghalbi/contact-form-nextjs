@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { getCurrentUser } from "@/lib/session";
 import { prisma } from "@/lib/prisma"; 
 
 const WEBHOOK_URL = process.env.WEBHOOK_URL;
@@ -9,7 +8,7 @@ export async function POST(request: Request) {
   try {
     
     // Check if the user is authenticated
-    const session = await getServerSession(authOptions);
+    const session = await getCurrentUser();
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

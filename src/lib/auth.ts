@@ -1,11 +1,26 @@
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "../app/api/auth/[...nextauth]/route";
+import NextAuth from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
 
-export async function getSession() {
-  return await getServerSession(authOptions);
-}
+export const authOptions = {
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    }),
+  ],
+  callbacks: {
+    async redirect({ baseUrl }) {
+      // Redirect to dashboard after sign in
+      return `${baseUrl}/contacts`;
+    },
+  },
+  pages: {
+    signIn: '/auth/signin',
+    // error: '/auth/error', // Error code passed in query string as ?error=
+  },
+  secret: process.env.NEXTAUTH_SECRET,
+};
 
-export async function getCurrentUser() {
-  const session = await getSession();
-  return session?.user;
-}
+const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST };
+

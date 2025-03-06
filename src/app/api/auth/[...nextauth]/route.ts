@@ -1,25 +1,7 @@
 import NextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
-
-export const authOptions = {
-  providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-    }),
-  ],
-  callbacks: {
-    async redirect({ baseUrl }) {
-      // Redirect to dashboard after sign in
-      return `${baseUrl}/contacts`;
-    },
-  },
-  pages: {
-    signIn: '/auth/signin',
-    // error: '/auth/error', // Error code passed in query string as ?error=
-  },
-  secret: process.env.NEXTAUTH_SECRET,
-};
+import { authOptions } from "@/lib/auth"; // Import from shared auth config
 
 const handler = NextAuth(authOptions);
+
+// Correctly wrap NextAuth for App Router
 export { handler as GET, handler as POST };
