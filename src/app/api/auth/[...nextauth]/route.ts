@@ -9,7 +9,7 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    async redirect({ url, baseUrl }) {
+    async redirect({ baseUrl }) {
       // Redirect to dashboard after sign in
       return `${baseUrl}/contacts`;
     },
