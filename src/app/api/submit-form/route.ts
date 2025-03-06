@@ -50,7 +50,7 @@ export async function POST(request: Request) {
     }
 
     // Insert new user into the database
-    const newUser = await prisma.user.create({
+    await prisma.user.create({
       data: {
         email,
         phone,

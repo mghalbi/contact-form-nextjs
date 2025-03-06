@@ -7,7 +7,6 @@ import { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 
 export default function SignIn() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/contacts';
   const [isLoading, setIsLoading] = useState(false);
