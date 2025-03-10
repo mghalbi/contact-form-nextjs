@@ -1,66 +1,73 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from 'react';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Loader2 } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Loader2 } from "lucide-react";
 import { useSession } from "next-auth/react";
 
 const ContactForm = () => {
-  
-  const { data: session } = useSession();
+  const { data: session, update } = useSession(); // Add update method
 
   const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    email: {}
+    name: "",
+    phone: "",
+    email: "",
   });
-  const [status, setStatus] = useState({ loading: false, success: false, error: '' });
-  
-  // Set email from session when component loads or session changes
+
+  const [status, setStatus] = useState({
+    loading: false,
+    success: false,
+    error: "",
+  });
+
+  // Set email and name from session when component loads or session changes
   useEffect(() => {
     if (session?.user?.email) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        name: session?.user?.name || '',
-        email: session?.user?.email || ''
+        name: session.user.name || "",
+        email: session.user.email || "",
       }));
     }
   }, [session]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setStatus({ loading: true, success: false, error: '' });
+    setStatus({ loading: true, success: false, error: "" });
 
     try {
-      const response = await fetch('/api/submit-form', {
-        method: 'POST',
+      const response = await fetch("/api/submit-form", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        // Handle error response
-        setStatus({ loading: false, success: false, error: data.error   });
-        return
+        setStatus({ loading: false, success: false, error: data.error });
+        return;
       }
-      
-      setStatus({ loading: false, success: true, error: '' });
-      setFormData({ name: '', phone: '', email: '' });
+
+      setStatus({ loading: false, success: true, error: "" });
+      setFormData({ name: "", phone: "", email: session?.user?.email || "" });
+
+      // Reload the session to get updated user data
+      await update(); // 🔹 Refresh session after submission
+
     } catch (e) {
-      console.error('Form submission error:', e);
-      setStatus({ loading: false, success: false, error: 'Error'  });
+      console.error("Form submission error:", e);
+      setStatus({ loading: false, success: false, error: "Error" });
     }
   };
 
@@ -71,7 +78,6 @@ const ContactForm = () => {
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
-
           <div>
             <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
               Phone Number
@@ -99,7 +105,7 @@ const ContactForm = () => {
                 Submitting...
               </>
             ) : (
-              'Submit'
+              "Submit"
             )}
           </button>
 
