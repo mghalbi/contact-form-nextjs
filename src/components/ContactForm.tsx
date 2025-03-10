@@ -25,8 +25,8 @@ const ContactForm = () => {
     if (session?.user?.email) {
       setFormData((prev) => ({
         ...prev,
-        name: session.user.name || "",
-        email: session.user.email || "",
+        name: session?.user?.name || "",
+        email: session?.user?.email || "",
       }));
     }
   }, [session]);
