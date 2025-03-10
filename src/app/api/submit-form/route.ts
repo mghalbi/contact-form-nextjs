@@ -16,7 +16,7 @@ export async function POST(request: Request) {
     const data = await request.json();
     const { email, phone } = data;
     
-    if ((!email || email.trim() === '') && (!phone || phone.trim() === '')) {
+    if (!email || !phone) {
       return NextResponse.json({ error: 'Email or phone is required and cannot be empty' }, { status: 400 });
     }
 
