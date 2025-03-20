@@ -9,17 +9,18 @@ export async function POST(request: Request) {
     
     // Check if the user is authenticated
     const session = await getCurrentUser();
+
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    const email = session?.email || "" ;
     const data = await request.json();
-    const { email, phone } = data;
+    const { name, phone } = data;
     
-    if (!email || !phone) {
+    if (!name || !phone) {
       return NextResponse.json({ error: 'Email or phone is required and cannot be empty' }, { status: 400 });
     }
-
 
     // Check if email or phone already exists
     const existingUser = await prisma.user.findFirst({
@@ -50,9 +51,10 @@ export async function POST(request: Request) {
     }
 
     // Insert new user into the database
-    await prisma.user.create({
+    await prisma.user.create({  
       data: {
         email,
+        name,
         phone,
       },
     });
@@ -60,10 +62,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true });
 
   } catch (error) {
-    console.error('Error submitting form:', error);
-    return NextResponse.json(
-      { error: 'Failed to submit form' },
-      { status: 500 }
-    );
+    console.error('Error submitting form:', error.message);
+    return NextResponse.json({ error: 'Failed to submit form' }, { status: 500 });
   }
 }

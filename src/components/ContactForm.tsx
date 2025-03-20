@@ -64,10 +64,10 @@ const ContactForm = () => {
         },
         body: JSON.stringify(formData),
       });
-
-      const data = await response.json();
-
+      console.log(response);
+      
       if (!response.ok) {
+        const data = await response.json();
         setStatus({ loading: false, success: false, error: data.error });
         return;
       }
