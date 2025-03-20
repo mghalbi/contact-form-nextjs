@@ -34,6 +34,3 @@ Thumbs.db
 # Build artifacts
 *.swp
 *.lock
-
-# Prisma
-prisma/migrations

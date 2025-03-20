@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "postinstall": "npx prisma migrate resolve --applied 'migration_name'",
+    "postinstall": "npx prisma migrate resolve --applied 'remove_name_field'",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
