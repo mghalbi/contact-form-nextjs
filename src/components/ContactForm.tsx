@@ -82,10 +82,16 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-cover bg-center px-4" 
+         style={{
+           backgroundImage: `url('/farm-background.jpg')`,
+           backgroundSize: 'cover',
+           backgroundPosition: 'center',
+           backgroundRepeat: 'no-repeat'
+         }}>
       <Card className="w-full max-w-md space-y-8 p-10 rounded-2xl shadow-xl bg-white">
         <CardHeader>
-          <CardTitle className="text-2xl text-center">Contact Information</CardTitle>
+          <CardTitle className="text-3xl font-bold text-gray-900">Contact Information</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
