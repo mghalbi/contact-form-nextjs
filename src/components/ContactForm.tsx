@@ -33,7 +33,6 @@ const ContactForm = () => {
     if (session?.user?.email) {
       setFormData((prev) => ({
         ...prev,
-        name: session?.user?.name || "",
         email: session?.user?.email || "",
       }));
     }
@@ -90,6 +89,21 @@ const ContactForm = () => {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Enter your name"
+              />
+            </div>
             <div>
               <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
                 Phone Number

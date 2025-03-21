@@ -3,6 +3,7 @@ import { getCurrentUser } from "@/lib/session";
 import { prisma } from "@/lib/prisma"; 
 
 const WEBHOOK_URL = process.env.WEBHOOK_URL;
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
 
 export async function POST(request: Request) {
   try {
@@ -29,9 +30,7 @@ export async function POST(request: Request) {
       },
     });
 
-    console.log(existingUser)
-
-    if (existingUser) {
+    if (existingUser && email !== ADMIN_EMAIL) {
       return NextResponse.json({ error: 'Email or phone number already exists' }, { status: 400 });
     }
 
