@@ -30,10 +30,22 @@ export async function POST(request: Request) {
       },
     });
 
+    if (email === ADMIN_EMAIL) {
+        // Check if phone already exists
+        const existingPhone = await prisma.user.findFirst({
+          where: {
+            phone,
+          },
+        });
+        if (existingPhone) {
+          return NextResponse.json({ error: 'Email or phone number already exists' }, { status: 400 });
+        }
+    }
+
     if (existingUser && email !== ADMIN_EMAIL) {
       return NextResponse.json({ error: 'Email or phone number already exists' }, { status: 400 });
     }
-
+    
     const response = await fetch(WEBHOOK_URL!, {
       method: 'POST',
       headers: {
