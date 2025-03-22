@@ -16,13 +16,7 @@ export default function SignIn() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-cover bg-center px-4" 
-    style={{
-      backgroundImage: `url('/immagine_background_form.jpg')`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat'
-    }}>
+    <div className="bg-[#fffaec] min-h-screen flex items-center justify-center bg-cover bg-center px-4" >
       <div className="w-full max-w-md space-y-8 p-10 rounded-2xl shadow-xl bg-white">
         <div className="text-center">
           <h2 className="text-3xl font-bold text-gray-900">Benvenuto, proseguire per iscrizione alla nostra WhatsApp Newsletter</h2>
