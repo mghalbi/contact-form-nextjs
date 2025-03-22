@@ -84,7 +84,7 @@ const ContactForm = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-cover bg-center px-4" 
          style={{
-           backgroundImage: `url('/farm-background.jpg')`,
+           backgroundImage: `url('/immagine_background_form.jpg')`,
            backgroundSize: 'cover',
            backgroundPosition: 'center',
            backgroundRepeat: 'no-repeat'
