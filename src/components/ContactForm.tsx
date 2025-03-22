@@ -112,7 +112,7 @@ const ContactForm = () => {
             </div>
             <div>
               <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-                Numero WhatsApp (senza spazi e con +39 iniziale) 
+                Numero WhatsApp (+39 iniziale e senza spazi) 
               </label>
               <input
                 type="tel"
@@ -122,7 +122,7 @@ const ContactForm = () => {
                 onChange={handleChange}
                 required
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Inserire il numero es. +393756593065"
+                placeholder="es. +393756593065"
               />
             </div>
 
