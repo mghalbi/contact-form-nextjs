@@ -82,13 +82,7 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-cover bg-center px-4" 
-         style={{
-           backgroundImage: `url('/immagine_background_form.jpg')`,
-           backgroundSize: 'cover',
-           backgroundPosition: 'center',
-           backgroundRepeat: 'no-repeat'
-         }}>
+    <div className="bg-[#fffaec] min-h-screen flex items-center justify-center bg-cover bg-center px-4">
       <Card className="w-full max-w-md space-y-8 p-10 rounded-2xl shadow-xl bg-white">
         <CardHeader>
           <CardTitle className="text-3xl font-bold text-gray-900">Rimaniamo in contatto</CardTitle>
