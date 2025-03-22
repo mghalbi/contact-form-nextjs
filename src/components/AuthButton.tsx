@@ -25,8 +25,8 @@ export default function SignIn() {
     }}>
       <div className="w-full max-w-md space-y-8 p-10 rounded-2xl shadow-xl bg-white">
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-gray-900">Welcome Back</h2>
-          <p className="mt-2 text-sm text-gray-600">Please sign in to continue</p>
+          <h2 className="text-3xl font-bold text-gray-900">Benvenuto, proseguire per iscrizione alla nostra WhatsApp Newsletter</h2>
+          <p className="mt-2 text-sm text-gray-600">Accedere con account Google</p>
         </div>
         <button
           onClick={handleGoogleSignIn}
