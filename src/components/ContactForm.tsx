@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Loader2 } from "lucide-react";
+import { redirect } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 const isValidItalianPhone = (phone: string) => {
@@ -15,7 +16,12 @@ const isValidItalianPhone = (phone: string) => {
 };
 
 const ContactForm = () => {
-  const { data: session, update } = useSession();
+  const { data: session, update } = useSession({
+    required: true,
+    onUnauthenticated() {
+      redirect("/auth/signin");
+    },
+  });
 
   const [formData, setFormData] = useState({
     name: "",
@@ -82,22 +88,16 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-cover bg-center px-4" 
-         style={{
-           backgroundImage: `url('/farm-background.jpg')`,
-           backgroundSize: 'cover',
-           backgroundPosition: 'center',
-           backgroundRepeat: 'no-repeat'
-         }}>
+    <div className="bg-[#fffaec] min-h-screen flex items-center justify-center bg-cover bg-center px-4">
       <Card className="w-full max-w-md space-y-8 p-10 rounded-2xl shadow-xl bg-white">
         <CardHeader>
-          <CardTitle className="text-3xl font-bold text-gray-900">Contact Information</CardTitle>
+          <CardTitle className="text-3xl font-bold text-gray-900">Rimaniamo in contatto</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                Name
+                Nome
               </label>
               <input
                 type="text"
@@ -107,12 +107,12 @@ const ContactForm = () => {
                 onChange={handleChange}
                 required
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Enter your name"
+                placeholder="Inserire il nome"
               />
             </div>
             <div>
               <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-                Phone Number
+                Numero WhatsApp (+39 iniziale e senza spazi) 
               </label>
               <input
                 type="tel"
@@ -122,7 +122,7 @@ const ContactForm = () => {
                 onChange={handleChange}
                 required
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Enter your phone number"
+                placeholder="es. +393756593065"
               />
             </div>
 
@@ -134,16 +134,16 @@ const ContactForm = () => {
               {status.loading ? (
                 <>
                   <Loader2 className="animate-spin mr-2" size={18} />
-                  Submitting...
+                  Invio in corso...
                 </>
               ) : (
-                "Submit"
+                "Conferma"
               )}
             </button>
 
             {status.success && (
               <div className="p-4 bg-green-100 text-green-700 rounded-md">
-                Thank you! Your information has been submitted successfully.
+                Grazie mille! Invieremo al suo numero un messaggio di benvenuto!
               </div>
             )}
 
