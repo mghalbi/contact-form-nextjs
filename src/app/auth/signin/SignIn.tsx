@@ -8,7 +8,7 @@ import { FcGoogle } from 'react-icons/fc';
 
 export default function SignIn() {
   const searchParams = useSearchParams();  // Using search params in a client component
-  const callbackUrl = searchParams.get('callbackUrl') || '/contacts';
+  const callbackUrl = searchParams.get('callbackUrl') || '';
   const [isLoading, setIsLoading] = useState(false);
 
   const handleGoogleSignIn = async () => {

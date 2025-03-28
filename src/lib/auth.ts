@@ -16,7 +16,7 @@ export const authOptions = {
   callbacks: {
     async redirect({ baseUrl }: RedirectCallbackParams) {
       // Redirect to dashboard after sign in
-      return `${baseUrl}/contacts`;
+      return `${baseUrl}`;
     },
   },
   pages: {
