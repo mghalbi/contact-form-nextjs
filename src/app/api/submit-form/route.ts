@@ -38,12 +38,12 @@ export async function POST(request: Request) {
           },
         });
         if (existingPhone) {
-          return NextResponse.json({ error: 'Email or phone number already exists' }, { status: 400 });
+          return NextResponse.json({ error: 'Abbiamo già nel nostro database il suo numero o la sua mail, se non riceve i nostri messaggi provi a contattarci telefonicamente.' }, { status: 400 });
         }
     }
 
     if (existingUser && email !== ADMIN_EMAIL) {
-      return NextResponse.json({ error: 'Email or phone number already exists' }, { status: 400 });
+      return NextResponse.json({ error: 'Abbiamo già nel nostro database il suo numero o la sua mail, se non riceve i nostri messaggi provi a contattarci telefonicamente.' }, { status: 400 });
     }
     
     const response = await fetch(WEBHOOK_URL!, {

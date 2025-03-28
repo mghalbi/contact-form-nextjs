@@ -14,14 +14,29 @@ export const authOptions = {
     }),
   ],
   callbacks: {
+    async jwt({ token, user }: { token: any; user?: { id: string } }) {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
+    async session({ session, token }: { session: { user?: { id?: string } }; token: { id?: string } }) {
+      if (session.user) {
+        session.user.id = token.id as string;
+      }
+      return session;
+    },
     async redirect({ baseUrl }: RedirectCallbackParams) {
       // Redirect to dashboard after sign in
       return `${baseUrl}`;
     },
   },
+  session: {
+    strategy: "jwt",
+    maxAge: 24 * 60 * 60, // 24 hours
+  },
   pages: {
     signIn: '/auth/signin',
-    // error: '/auth/error', // Error code passed in query string as ?error=
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
