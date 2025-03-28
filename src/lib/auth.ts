@@ -20,9 +20,9 @@ export const authOptions = {
       }
       return token;
     },
-    async session({ session, token }: { session: { user?: { id?: string } }; token: { id?: string } }) {
+    async session({ session, token }: { session: any; token: { id?: string } }) {
       if (session.user) {
-        session.user.id = token.id as string;
+        session.user.id = token.id;
       }
       return session;
     },
@@ -32,7 +32,7 @@ export const authOptions = {
     },
   },
   session: {
-    strategy: "jwt",
+    strategy: "jwt" as const,
     maxAge: 24 * 60 * 60, // 24 hours
   },
   pages: {
@@ -43,4 +43,3 @@ export const authOptions = {
 
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
-
