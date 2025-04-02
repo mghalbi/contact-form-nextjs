@@ -15,6 +15,10 @@ export async function POST(request: Request) {
 
     const email = session.email || '';
     const { name, phone } = await request.json();
+    console.log("dati personali")
+    console.log(name);
+    console.log(email);
+    console.log(phone);
     if (!name || !phone) {
       return NextResponse.json({ error: 'Email or phone is required and cannot be empty' }, { status: 400 });
     }
@@ -26,6 +30,7 @@ export async function POST(request: Request) {
       },
     });
 
+    console.log("verifica se user è admin");
     if (email === ADMIN_EMAIL) {
       const existingPhone = await prisma.user.findFirst({ where: { phone } });
       if (existingPhone) {
@@ -35,6 +40,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Abbiamo già nel nostro database il suo numero o la sua mail, se non riceve i nostri messaggi provi a contattarci telefonicamente.' }, { status: 400 });
     }
 
+    console.log("invio dati verso webhook");
     // Send data to webhook
     const response = await fetch(WEBHOOK_URL!, {
       method: 'POST',
@@ -43,6 +49,8 @@ export async function POST(request: Request) {
     });
     if (!response.ok) throw new Error('Webhook call failed');
 
+    console.log("savlvatggio su db")
+    console.log( email, name, phone);
     // Insert new user into the database
     await prisma.user.create({ data: { email, name, phone } });
     return NextResponse.json({ success: true });
