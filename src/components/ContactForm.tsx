@@ -118,7 +118,7 @@ const ContactForm = () => {
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 text-gray-700  rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Inserire il nome"
               />
             </div>
