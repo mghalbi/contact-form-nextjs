@@ -14,6 +14,7 @@
     "@prisma/client": "^6.4.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "google-libphonenumber": "^3.2.40",
     "lucide-react": "^0.475.0",
     "next": "15.1.7",
     "next-auth": "^4.24.11",
@@ -22,10 +23,12 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
+    "react-international-phone": "^4.5.0",
     "tailwind-merge": "^3.0.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@types/google-libphonenumber": "^7.4.30",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

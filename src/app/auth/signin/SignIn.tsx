@@ -4,11 +4,12 @@
 import { signIn } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
+import Image from "next/image";
 import { FcGoogle } from 'react-icons/fc';
 
 export default function SignIn() {
   const searchParams = useSearchParams();  // Using search params in a client component
-  const callbackUrl = searchParams.get('callbackUrl') || '/contacts';
+  const callbackUrl = searchParams.get('callbackUrl') || '';
   const [isLoading, setIsLoading] = useState(false);
 
   const handleGoogleSignIn = async () => {
@@ -17,11 +18,12 @@ export default function SignIn() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 px-4">
+    <div className="bg-[#fffaec] min-h-screen flex flex-col items-center justify-center bg-cover bg-center px-4">
+      <Image src="/logo_santinelli.png" alt="Logo" width={200} height={200} className="mb-6" />
       <div className="w-full max-w-md space-y-8 p-10 rounded-2xl shadow-xl bg-white">
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-gray-900">Welcome Back</h2>
-          <p className="mt-2 text-sm text-gray-600">Please sign in to continue</p>
+          <h2 className="text-3xl font-bold text-gray-900">Benvenuto, proseguire per iscrizione alla nostra WhatsApp Newsletter</h2>
+          <p className="mt-2 text-sm text-gray-600">Accedere con account Google</p>
         </div>
         <button
           onClick={handleGoogleSignIn}
