@@ -48,7 +48,7 @@ export const authOptions = {
   },
   session: {
     strategy: "jwt" as const,
-    maxAge: 60, // 24 hours
+    maxAge: 5*60, // 24 hours
   },
   pages: {
     signIn: '/auth/signin',
